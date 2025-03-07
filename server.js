@@ -48,6 +48,11 @@ app.post('/api/schedules', async (req, res) => {
   }
 });
 
+// permit access
+app.use(cors({
+  origin: 'http://localhost:3000',
+}));
+
 // 서버 실행
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
