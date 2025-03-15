@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 const scheduleRoutes = require('./routes/schedules');
-const suggestionRoutes = require('./routes/suggestions');
+//const suggestionRoutes = require('./routes/suggestions');
+const rbcScheduleRoutes = require('./routes/rbc-schedules');
 
 const app = express();
 
@@ -21,7 +22,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // Routes
 app.use('/api/schedules', scheduleRoutes);
-app.use('/api/suggestions', suggestionRoutes);
+//app.use('/api/suggestions', suggestionRoutes);
+app.use('/api/rbc-schedules', rbcScheduleRoutes);
 
 // Server on
 const PORT = process.env.PORT || 3001;

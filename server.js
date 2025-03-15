@@ -26,7 +26,16 @@ const scheduleSchema = new mongoose.Schema({
   userId: String,
 });
 
+const rbcScheduleSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  start: { type: Date, required: true },
+  end: { type: Date, required: true },
+  description: { type: String },
+  createdAt: { type: Date, default: Date.now },
+});
+
 const Schedule = mongoose.model('Schedule', scheduleSchema);
+const RbcSchedule = mongoose.model('RbcSchedule', rbcScheduleSchema);
 
 // API 엔드포인트
 app.get('/api/schedules', async (req, res) => {
@@ -38,11 +47,30 @@ app.get('/api/schedules', async (req, res) => {
   }
 });
 
+app.get('/api/rbc-schedules', async (req, res) => {
+  try {
+    const rbcSchedule = await RbcSchedule.find();
+    res.json(rbcSchedule);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.post('/api/schedules', async (req, res) => {
   try {
     const newSchedule = new Schedule(req.body);
     await newSchedule.save();
     res.status(201).json(newSchedule);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/rbc-schedules', async (req, res) => {
+  try {
+    const newRbcSchedule = new RbcSchedule(req.body);
+    await newRbcSchedule.save();
+    res.status(201).json(newRbcSchedule);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
