@@ -2,7 +2,7 @@
 const cors = require('cors');
 
 const corsOptions = {
-  origin: 'http://localhost:3000', // Allow requests from React frontend
+  origin: '*', // Allow requests from React frontend
   optionsSuccessStatus: 200,
 };
 

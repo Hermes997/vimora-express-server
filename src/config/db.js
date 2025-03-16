@@ -1,5 +1,6 @@
 // Import Mongoose for MongoDB connection
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const connectDB = async () => {
   // Connect to MongoDB with error handling
