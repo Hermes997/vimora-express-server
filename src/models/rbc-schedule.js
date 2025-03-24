@@ -17,4 +17,4 @@ const rbcScheduleSchema = new mongoose.Schema({
 
 rbcScheduleSchema.index({ eventID: 1 }); // Search Engine Optimization
 
-module.exports = mongoose.model('RbcSchedule', rbcScheduleSchema);
+module.exports = mongoose.model('RbcSchedule', rbcScheduleSchema, 'rbc_schedules');

@@ -2,11 +2,27 @@
 const RbcSchedule = require('../models/rbc-schedule');
 
 exports.getRbcSchedules = async (req, res) => {
-  // Retrieve all rbcSchedules from the database
   try {
-    const rbcSchedule = await RbcSchedule.find();
-    res.json(rbcSchedule);
+    const rbcSchedules = await RbcSchedule.find().sort({ start: 1 });
+    console.log('Fetched rbcSchedules:', rbcSchedules);
+    const formattedSchedules = rbcSchedules
+      .filter(schedule => {
+        const start = new Date(schedule.start);
+        const end = new Date(schedule.end);
+        return !isNaN(start) && !isNaN(end);
+      })
+      .map(schedule => ({
+        id: schedule._id.toString(),
+        eventID: schedule.eventID,
+        title: schedule.title,
+        start: schedule.start.toISOString(),
+        end: schedule.end.toISOString(),
+        description: schedule.description || '',
+        createdAt: schedule.createdAt.toISOString(),
+      }));
+    res.json(formattedSchedules);
   } catch (err) {
+    console.error('Error fetching rbcSchedules:', err);
     res.status(500).json({ error: err.message });
   }
 };
