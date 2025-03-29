@@ -79,3 +79,17 @@ exports.updateRbcSchedule = async (req, res) => {
     res.status(500).json({ error: `Failed to update event: ${error.message}` });
   }
 };
+
+exports.deleteRbcSchedule = async (req, res) => {
+  try {
+    const { eventID } = req.params;
+    const result = await RbcSchedule.deleteOne({ eventID });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+    res.status(200).json({ message: 'Event deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting rbcSchedule:', err);
+    res.status(500).json({ error: err.message });
+  }
+};
